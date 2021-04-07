@@ -451,67 +451,73 @@
 
 				<section>
 					<section>
-					<h3>In-Class Exercises</h3>
-					<p>Each exercise has a basic template file</p>
-					<p>Update the template file to use this Vega code</p>
-					<p>(Remember to remove leading space in closing tag!)</p>
-					<pre><code data-trim><script type="text/template">
-						<div id="vis"></div>
-						<script type="text/javascript">
-						var spec = {
-						  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-						  "config": {
-						    "view": {
-						      "continuousHeight": 300,
-						      "continuousWidth": 400
-						    }
-						  },
-						  "data": {
-						    "url": "https://vega.github.io/vega-datasets/data/cars.json"
-						  },
-						  "encoding": {
-						    "color": {
-						      "field": "Origin",
-						      "type": "nominal"
-						    },
-						    "x": {
-						      "field": "Horsepower",
-						      "type": "quantitative"
-						    },
-						    "y": {
-						      "field": "Miles_per_Gallon",
-						      "type": "quantitative"
-						    }
-						  },
-						  "mark": "point"
-						};
-						var opt = {"renderer": "canvas", "actions": false};
-						vegaEmbed("#vis", spec, opt);
-						< /script> 
-					</script></code></pre>
+						<h3>In-Class Exercises</h3>
+						<p>Each exercise has a basic template file</p>
+						<p>Update the template file to use this Vega spec</p>
+						<p>Upload whichever HTML file to Canvas</p>
+					</section>
+
+					<section>
+						<h3>In-Class Exercises</h3>
+						<p>Use the Vega spec document below</p>
+						<pre><code data-trim data-line-numbers class="js">
+							{
+							  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+							  "config": {
+							    "view": {
+							      "continuousHeight": 300,
+							      "continuousWidth": 400
+							    }
+							  },
+							  "data": {
+							    "url": "https://vega.github.io/vega-datasets/data/cars.json"
+							  },
+							  "encoding": {
+							    "color": {
+							      "field": "Origin",
+							      "type": "nominal"
+							    },
+							    "x": {
+							      "field": "Horsepower",
+							      "type": "quantitative"
+							    },
+							    "y": {
+							      "field": "Miles_per_Gallon",
+							      "type": "quantitative"
+							    }
+							  },
+							  "mark": "point"
+							};
+						</code></pre>
 					</section>
 
 					<section>
 						<h3>Exercise 1: Add a simple chart to a web page</h3>
 						<ol>
-							<li>Download or copy the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/html_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244623/download?download_frd=1">Canvas</a></li>
+							<li>Download/copy the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/html_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244623/download?download_frd=1">Canvas</a></li>
 							<li>Open in text editor</li>
-							<li>Add the <code>script</code> and <code>div</code> tags</li>
-							<li>Add the Vega spec document</li>
+							<li>Add the tags to import Vega (<a href="#/6/0/0">Slide 6</a>)</li>
+							<li>Add the Vega spec document (<a href="#/10/1">Slide 10/1</a>)</li>
 							<li>Test to make sure the visualization appears</li>
 						</ol>
-						
 					</section>
 
 					<section>
 						<h3>Exercise 2: Add a simple chart to Reveal.js</h3>
 						<ol>
-							<li>Download the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/reveal_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244625/download?download_frd=1">Canvas</a></li>
+							<li>Download/copy the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/reveal_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244625/download?download_frd=1">Canvas</a></li>
 							<li>Open in text editor</li>
-							<li>Add the <code>script</code> and <code>div</code> tags</li>
-							<li>Add the Vega spec document</li>
+							<li>Add the tags to import Vega (<a href="#/6/0/0">Slide 6</a>)</li>
+							<li>Add the Vega spec document (<a href="#/10/1">Slide 10/1</a>)</li>
 							<li>Test to make sure the visualization appears</li>
 						</ol>
+					</section>
+
+					<section>
+						<h3>In-Class Exercises</h3>
+						<p>Upload at least one of your files to Canvas</p>
+						<p><a href="https://canvas.colorado.edu/courses/70121/assignments/1025586">"Apr 7 : in-class</a></p>
+						<p>Simple binary participation</p>
 					</section>
 
 				</section>
