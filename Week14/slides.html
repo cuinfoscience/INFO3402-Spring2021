@@ -33,7 +33,7 @@
 					<section>
 						<h2>Outline for Week 14</h3>
 						<ul>
-							<li>Previous weeks 
+							<li>Previous weeks</li> 
 							<ul>
 								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2011/slides.html" target="_blank" rel="noopener noreferrer">Week 11</a>: Intro to Reveal.js</li>
 								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2012/slides.html" target="_blank" rel="noopener noreferrer">Week 12</a>: Intermediate Reveal.js + MathJax</a></li>
@@ -190,29 +190,242 @@
 
 				</section>
 
+				<section>
+
 					<section>
 						<h2>Marks: Bar</h2>
+						<p>Bar charts are useful for histograms, changes over time, and comparing values</p>
+						<p>This is <code><a href="https://github.com/vega/vega-datasets/blob/master/data/population_engineers_hurricanes.csv">population_engineers_hurricanes.csv</a></code> dataset:</p>
+						<div id="vis-bar"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 600,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/population_engineers_hurricanes.csv"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "state",
+									"type":"nominal",
+									"sort":"-y"
+								},
+								"y": {
+									"field": "population",
+									"type":"quantitative"
+								}
+							}
+							};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar", spec, opt);
+						</script>
 					</section>
 
 					<section>
-						<h2>Marks: Circle</h2>
+						<h2>Marks: Bar</h2>
+						<p>Vega spec doc:</p>
+						<pre><code data-trim class='js' data-line-numbers=|2|5|7|9-13|10|11|12|14-17|15|16>
+							{
+							"width": 600,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/population_engineers_hurricanes.csv"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "state",
+									"type":"nominal",
+									"sort":"-y"
+								},
+								"y": {
+									"field": "population",
+									"type":"quantitative"
+								}
+							}
+							};
+						</code></pre>
+						<p class="fragment">We'll see more examples of sorting and transforming data</p>
 					</section>
 
 					<section>
-						<h2>Marks: Image</h2>
+						<h2>Marks: Bar</h2>
+						<p>There are more advanced capabilities like:</p>
+						<ul>
+							<li>Histograms</li>
+							<li>Stacked bar charts</li>
+							<li>Grouped bar charts</li>
+							<li>Ranged bars</li>
+						</ul>
+						<p><a href="https://vega.github.io/vega-lite/docs/bar.html">Check out the docs!</a></p>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Marks: Point/Circle</h2>
+						<p>Points can be used for scatter, bubble, spatial plots</p>
+						<p>This is <code><a href="https://github.com/vega/vega-datasets/blob/master/data/sp500-2000.csv">sp500-2000.csv</a></code> dataset:</p>
+						<div id="vis-point"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/sp500-2000.csv"
+							},
+							"mark": {
+								"type": "circle",
+								"size": 10,
+							},
+							"encoding": {
+								"x": {
+									"field": "volume",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "close",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "date",
+									"timeUnit": "year",
+									"type": "ordinal",
+									"scale": {
+										"scheme": "spectral"
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-point", spec, opt);
+						</script>
 					</section>
 
 					<section>
-						<h2>Marks: Line</h2>
+						<h2>Marks: Points/Circle</h2>
+						<p>Vega spec doc:</p>
+						<pre><code data-trim class='js' data-line-numbers=|5|7-10|8|9|12-15|16-19|20-27|21|22|23|24-26>
+						{
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/sp500-2000.csv"
+							},
+							"mark": {
+								"type": "circle",
+								"size": 10,
+							},
+							"encoding": {
+								"x": {
+									"field": "volume",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "close",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "date",
+									"timeUnit": "year",
+									"type": "ordinal",
+									"scale": {
+										"scheme": "spectral"
+									}
+								}
+							}
+						};
+						</code></pre>
+						<p class="fragment">We'll see more examples working with scale</p>
 					</section>
+
+				</section>
+
+				<section>
 
 					<section>
 						<h2>Marks: Rect</h2>
+						<p>Rects can be used to make any kind of rectangle but are best known for heatmaps and 2D histograms</p>
+						<div id="vis-rect"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/population.json"
+							},
+							"transform": [{
+								"filter": {
+									"field": "year",
+									"equal": 2000
+								}
+							}],
+							"mark": "rect",
+							"encoding": {
+								"x": {
+									"field": "age",
+									"type": "ordinal"
+								},
+								"y": {
+									"field": "sex",
+									"type": "nominal",
+								},
+								"color": {
+									"field": "people",
+									"type": "quantitative",
+									"scale": {
+										"scheme": "turbo",
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-rect", spec, opt);
+						</script>
 					</section>
 
 					<section>
-						<h2>Marks: Text</h2>
+						<h2>Marks: Points/Circle</h2>
+						<p>Vega spec doc:</p>
+						<pre><code data-trim class='js' data-line-numbers=|5|7-12|8|9-10|13|15-18|19-22|23-29|24|25|26-28>
+						{
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/population.json"
+							},
+							"transform": [{
+								"filter": {
+									"field": "year",
+									"equal": 2000
+								}
+							}],
+							"mark": "rect",
+							"encoding": {
+								"x": {
+									"field": "age",
+									"type": "ordinal"
+								},
+								"y": {
+									"field": "sex",
+									"type": "nominal",
+								},
+								"color": {
+									"field": "people",
+									"type": "quantitative",
+									"scale": {
+										"scheme": "turbo",
+									}
+								}
+							}
+						};
+						</code></pre>
+						<p class="fragment">We'll see more examples working with transform</p>
 					</section>
+
 				</section>
 
 				<section>
