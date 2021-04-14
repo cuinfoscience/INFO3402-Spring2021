@@ -88,7 +88,43 @@
 
 					<section>
 						<h2>In-class Exercise 2</h2>
-						<p>Your visualization goes here!</p>
+						
+						<div id="crimea-bars"></div>
+						
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 800,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/crimea.json"
+							},
+							"mark": {
+								"type":"bar",
+								"color":"orange"
+							},
+							"encoding": {
+								"x": {
+									"field": "date",
+									"type": "temporal",
+									"title": "Date",
+									"axis": {
+										"titleFontSize": 15
+									}
+								},
+								"y": {
+									"field": "wounds",
+									"type": "quantitative",
+									"title": "Number of wounded",
+									"axis": {
+										"titleFontSize": 15
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#crimea-bars", spec, opt);
+						</script>
 					</section>
 				</section>
 
@@ -109,7 +145,45 @@
 					
 					<section>
 						<h2>In-class Exercise 3</h2>
-						<p>Your visualization goes here!</p>
+
+						<div id="penguins-scatter"></div>
+						
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/penguins.json"
+							},
+							"width":800,
+							"height":400,
+							"config":{
+								"font":"Times New Roman"
+							},
+							"mark": "point",
+							"encoding": {
+								"x": {
+									"field": "Flipper Length (mm)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"y": {
+									"field": "Body Mass (g)",
+									"type": "quantitative",
+									"scale": {"zero": false}
+								},
+								"color": {
+									"field": "Species",
+									"type": "nominal"
+								},
+								"shape": {
+									"field": "Sex",
+									"type": "nominal"
+								}
+							}	
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#penguins-scatter", spec, opt);
+						</script>
 					</section>
 				</section>
 
