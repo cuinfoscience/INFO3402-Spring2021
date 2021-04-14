@@ -99,6 +99,7 @@
 
 				<section>
 					<h2>Changing marks, encodings, types</h2>
+					<p>Monday</p>
 					<ul>
 						<li><a href="https://vega.github.io/vega-lite/docs/mark.html" target="_blank" rel="noopener noreferrer">Marks</a> are the basic shapes</li>
 						<li><a href="https://vega.github.io/vega-lite/docs/encoding.html" target="_blank" rel="noopener noreferrer">Encodings</a> maps data fields to shapes</li>
@@ -553,6 +554,7 @@
 
 					<section>
 						<h2>In-class exercise 1</h2>
+						<p>Monday</p>
 						<p>Use the "<a href="https://github.com/vega/vega-datasets/blob/master/data/co2-concentration.csv" target="_blank" rel="noopener noreferrer">co2-concentration.csv</a>" data to make a line or area plot:</p>
 						<ul>
 							<li>x-axis: "Date"</li>
@@ -588,6 +590,382 @@
 						<h2>Customizing colors, shapes, fonts</h2>
 						<p>Wednesday</p>
 					</section>
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Customizing colors</h2>
+						<p>The background of an image defaults to white, but can be changed to another color</p>
+						<pre><code data-trim class='js' data-line-numbers=3>
+						{
+							...
+							"background": "red",
+							"mark": "area",
+							...
+						};
+						</code></pre>
+
+						<div id="vis-area2"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 200,
+							"background": "red",
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/sp500.csv"
+							},
+							"mark": "area",
+							"encoding": {
+								"x": {
+									"timeUnit": "yearmonth", 
+									"field": "date",
+									"axis": {
+										"format": "%Y"
+									}
+								},
+								"y": {
+									"field": "price",
+									"type": "quantitative"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-area2", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing colors</h2>
+						<p>The color of the mark can be customized</p>
+						<pre><code data-trim class='js' data-line-numbers=3-6>
+						{
+							...
+							"mark": {
+								"type": "area",
+								"color": "red"
+							},
+							...
+						};
+						</code></pre>
+
+						<div id="vis-area3"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/sp500.csv"
+							},
+							"mark": {
+								"type": "area",
+								"color": "red"
+							},
+							"encoding": {
+								"x": {
+									"type": "temporal", 
+									"field": "date",
+									"axis": {
+										"format": "%Y",
+									}
+								},
+								"y": {
+									"field": "price",
+									"type": "quantitative"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-area3", spec, opt);
+						</script>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Customizing size</h2>
+						<p>The size of an image is defined in pixels</p>
+						<pre><code data-trim class='js' data-line-numbers=3-4>
+						{
+							...
+							"width": 300,
+							"height": 200,
+							"mark": "area",
+							...
+						};
+						</code></pre>
+
+						<div id="vis-bar-car"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 250,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing size</h2>
+						<p>Changing the size should re-scale the elements</p>
+						<pre><code data-trim class='js' data-line-numbers=3>
+						{
+							...
+							"width": 800,
+							"height": 200,
+							"mark": "area",
+							...
+						};
+						</code></pre>
+
+						<div id="vis-bar-car2"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 800,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car2", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing size</h2>
+						<p>The visualization can also be automatically scaled to the width of the <code>div</code> element using "container"</p>
+						<p>It turns out Reveal.js breaks this but a <code>style="mid-width:100px"</code> in the <code>div</code> is a work-around</p>
+						<pre><code data-trim class='js' data-line-numbers=3>
+						{
+							...
+							"width": "container",
+							"height": 200,
+							"mark": "area",
+							...
+						};
+						</code></pre>
+
+						<div id="vis-bar-car3" style="min-width:100px"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": "container",
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"row"
+								"x": {
+									"field": "Origin"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car3", spec, opt);
+						</script>
+					</section>
+
+				</section>
+
+				<section>
+					
+					<section>
+						<h2>Customizing font</h2>
+						<p>There are a number of <a href="https://www.w3schools.com/cssref/css_websafe_fonts.asp">web safe CSS fonts</a></p>
+						<pre><code data-trim class='js' data-line-numbers=5-7>
+						{
+							...
+							"width": "container",
+							"height": 250,
+							"config": {
+								"font":"cursive"
+							},
+							...
+						};
+						</code></pre>
+						<div id="vis-bar-car4"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 250,
+							"config": {
+								"font":"cursive"
+							},
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car4", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing font</h2>
+						<p>Font color can also be customized by changing the <code>axis</code> object within the encoding</p>
+						<pre><code data-trim class='js' data-line-numbers=5-7>
+							...
+							"encoding": {
+								"x": {
+									"field": "Origin",
+									"axis":{
+										"labelColor": "red",
+									}
+							...
+						</code></pre>
+						<div id="vis-bar-car5"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin",
+									"axis":{
+										"labelColor": "red",
+									}
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car5", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing font</h2>
+						<p>Font size, alignment, padding, etc. can also be changed within the <code>axis</code> object</p>
+						<pre><code data-trim class='js' data-line-numbers=3,6-8>
+							...
+							"encoding": {
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"axis":{
+										"labelColor": "red",
+										"labelFontSize": 25
+							...
+						</code></pre>
+						<div id="vis-bar-car6"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin",
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"axis":{
+										"labelColor": "red",
+										"labelFontSize": 25
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car6", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Customizing font</h2>
+						<p>Font size, alignment, padding, etc. can also be changed for <code>axis</code> titles</p>
+						<pre><code data-trim class='js' data-line-numbers=3,6-8>
+							...
+							"encoding": {
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"axis":{
+										"titleColor": "red",
+										"titleFontSize": 25
+							...
+						</code></pre>
+						<div id="vis-bar-car7"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin",
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"axis":{
+										"titleColor": "red",
+										"titleFontSize": 25
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-bar-car7", spec, opt);
+						</script>
+					</section>
+
 				</section>
 
 				<section>
