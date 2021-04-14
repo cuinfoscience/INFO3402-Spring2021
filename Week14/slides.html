@@ -611,7 +611,7 @@
 					<section>
 						<h2>Customizing colors</h2>
 						<p>The background of an image defaults to white, but can be changed to another color</p>
-						<pre><code data-trim class='js' data-line-numbers=3>
+						<pre><code data-trim class='js' data-line-numbers=3-5>
 						{
 							...
 							"background": "red",
@@ -652,7 +652,7 @@
 					<section>
 						<h2>Customizing colors</h2>
 						<p>The "view" is the background of a mark and can be customized</p>
-						<pre><code data-trim class='js' data-line-numbers=3>
+						<pre><code data-trim class='js' data-line-numbers=3-5>
 						{
 							...
 							"view": {
@@ -697,7 +697,7 @@
 					<section>
 						<h2>Customizing colors</h2>
 						<p>The grid and the tick colors can also be customized</p>
-						<pre><code data-trim class='js' data-line-numbers=3>
+						<pre><code data-trim class='js' data-line-numbers=6-9>
 						{
 							...
 							"encoding": {
@@ -824,7 +824,6 @@
 					<section>
 						<h2>Customizing size</h2>
 						<p>The visualization can also be automatically scaled to the width of the <code>div</code> element using "container"</p>
-						<p>It turns out Reveal.js breaks this but a <code>style="mid-width:100px"</code> in the <code>div</code> is a work-around</p>
 						<pre><code data-trim class='js' data-line-numbers=3>
 						{
 							...
@@ -834,6 +833,10 @@
 							...
 						};
 						</code></pre>
+						<p>It turns out Reveal.js breaks this but a <code>style="mid-width:100px"</code> in the <code>div</code> is a work-around</p>
+						<pre><code class="html" data-trim data-line-numbers=1><script type="text/template">
+							<div id="vis-bar-car3" style="min-width:100px"></div>
+						</script></code></pre>
 
 						<div id="vis-bar-car3" style="min-width:100px"></div>
 						<script type="text/javascript">
@@ -948,7 +951,7 @@
 
 					<section>
 						<h2>Customizing font</h2>
-						<p>Font size, alignment, padding, etc. can also be changed within the <code>axis</code> object</p>
+						<p>Font size, alignment, padding, etc. can also be changed for <code>axis</code> labels: see more in <a href="https://vega.github.io/vega-lite/docs/axis.html">docs</a></p>
 						<pre><code data-trim class='js' data-line-numbers=3,6-8>
 							...
 							"encoding": {
@@ -1036,7 +1039,7 @@
 					<section>
 						<h2>In-class exercises</h2>
 						<p>Get as far as you can and submit whatever you have completed <a href="https://canvas.colorado.edu/courses/70121/assignments/1028638" target="_blank" rel="noopener noreferrer">on Canvas</a></p>
-						<p>Solutions will be posted on the <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/tree/main/Week14" target="_blank" rel="noopener noreferrer">class GitHub for this week</a></p>
+						<p>Solutions will be posted on the <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/tree/main/Week14" target="_blank" rel="noopener noreferrer">class GitHub</a></p>
 
 					</section>
 
