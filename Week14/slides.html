@@ -1081,10 +1081,517 @@
 				</section>
 
 				<section>
+					<h2>Composing and interactivity</h2>
+					<p>Friday</p>
+				</section>
+
+				<section>
+					<h2>Weekly Assignment 12</h2>
+					<p>Due Monday, April 19 via <a href="https://canvas.colorado.edu/courses/70121/assignments/956235">URL submission to Canvas</a></p>
+					<ul>
+						<li>Make a Reveal.js deck with two visualizations</li>
+						<li>Visualization 1 needs customized appearance (Weds)</li>
+						<ul><li>Changing colors, fonts, sizes, etc.</li></ul>
+						<li>Visualization 2 needs composing (Fri) </li>
+						<ul><li>Using facets, concats, layering, interactivity</li></ul>
+						<li>Include code block, links to documentation, interpretations</li>
+				</section>
+
+				<section>
+					<h2>Composing facets, layers, concats</h2>
+					<p>The visualizations we've done to date have involved a single "view"</p>
+					<p>Vega can also "compose" multiple views together for comparing and overlaying data</p>
+					<p>These are known as "trellis", "lattice", "grid", "panel", or "facet" charts</p>
+				</section>
+
+				<section>
 					<section>
-						<h2>Composing facets, views, concats</h2>
-						<p>Friday</p>
+						<h2>Facets</h2>
+						<p><a href="https://vega.github.io/vega-lite/docs/facet.html">Facets</a> allows us to break up a visualization with multiple categories into separate visualizations</p>
+						<p>Here's an example of a histogram of the cars dataset's horsepower by country of origin</p>
+						<div id="vis-cars-hist1"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									}
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist1", spec, opt);
+						</script>
 					</section>
+
+					<section>
+						<h2>Facets</h2>
+						<p>Code for the previous visualization</p>
+						<pre><code data-trim class='js' data-line-numbers=14-17>
+							"encoding": {
+								"x": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									}
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+							}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Facets</h2>
+						<p>We could make this a bit clearer by having the histogram bars side-by-side</p>
+						<p>This is our first example of faceting, each origin gets its own view</p>
+						<div id="vis-cars-hist2"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									},
+									"spacing": 10
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"column": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist2", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Facets</h2>
+						<p>Code for the previous visualization</p>
+						<pre><code data-trim class='js' data-line-numbers=14-17>
+							"encoding": {
+								"x": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									},
+									"spacing": 10
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"column": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Facets</h2>
+						<p>We could make this a bit clearer by having the histogram bars side-by-side</p>
+						<p>This is the same data, but each histogram bin gets its own view to create a grouped bar plot</p>
+						<div id="vis-cars-hist3"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"height": 200,
+							"width": {"step": 12},
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"field": "Origin",
+									"type": "nominal"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"column": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									},
+									"spacing": 10
+								},
+								"color": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist3", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Facets</h2>
+						<p>Code for the previous visualization</p>
+						<pre><code data-trim class='js' data-line-numbers=11-18|2-5,19-22>
+							"encoding": {
+								"x": {
+									"field": "Origin",
+									"type": "nominal"
+								},
+								"y": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								},
+								"column": {
+									"field": "Horsepower",
+									"type": "quantitative",
+									"bin": {
+										"maxbins": 15
+									},
+									"spacing": 10
+								},
+								"color": {
+									"field": "Origin",
+									"type": "nominal"
+								}
+							}
+						</code></pre>
+					</section>
+
+				</section>
+				
+				<section>
+					<section>
+						<h2>Layers</h2>
+						<p><a href="https://vega.github.io/vega-lite/docs/layer.html">Layering</a> allow us to stack multiple views together</p>
+						<p>This is helpful for annotating marks with text</p>
+						<p><code>mark</code> objects go within a <code>layer</code> object</p>
+						<div id="vis-cars-hist4"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/cars.json"
+							},
+							"encoding": {
+								"y": {
+									"field": "Origin",
+									"type": "nominal"
+								},
+								"x": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								}
+							},
+							"layer":[{
+								"mark": "bar"
+							},{
+								"mark": {
+									"type": "text",
+									"align": "left",
+									"baseline": "middle",
+									"dx": 3
+								},
+								"encoding": {
+									"text": {
+										"aggregate": "count",
+										"type": "quantitative"
+									}
+								}
+							}],
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist4", spec, opt);
+						</script>
+
+					</section>
+
+					<section>
+						<h2>Layers</h2>
+						<p>Code for the previous visualization</p>
+						<pre><code data-trim class='js' data-line-numbers=1-11|12-27|12-14|14-27|15-20|21-26>
+							"encoding": {
+								"y": {
+									"field": "Origin",
+									"type": "nominal"
+								},
+								"x": {
+									"aggregate": "count", 
+									"title": "Number of Cars",
+									"type": "quantitative"
+								}
+							},
+							"layer":[{
+								"mark": "bar"
+							},{
+								"mark": {
+									"type": "text",
+									"align": "left",
+									"baseline": "middle",
+									"dx": 3
+								},
+								"encoding": {
+									"text": {
+										"aggregate": "count",
+										"type": "quantitative"
+									}
+								}
+							}],
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Layers</h2>
+						<p>We can layer the same marks for different data together</p>
+						<div id="vis-cars-hist5"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/crimea.json"
+							},
+							"layer":[{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"wounds",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"disease",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"other",
+										"type":"quantitative"
+									},
+									"color": {"value":"grey"}
+								}
+							}]
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist5", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Layers</h2>
+						<p>Code for the previous visualization</p>
+						<pre><code data-trim class='js' data-line-numbers=1-14|14-27|27-40>
+							"layer":[{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"wounds",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"disease",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							},{
+								"mark": "line",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"other",
+										"type":"quantitative"
+									},
+									"color": {"value":"grey"}
+								}
+							}]
+						</code></pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Concats</h2>
+						<p><a href="https://vega.github.io/vega-lite/docs/concat.html">Concats</a> let us combine different views together</p>
+
+						<div id="vis-cars-hist6"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"hconcat":[{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/crimea.json"
+								},
+								"mark": "bar",
+								"title": "Crimea",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"wounds",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/sp500.csv"
+								},
+								"mark": "area",
+								"title": "S&P500",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"price",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							}]
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-cars-hist6", spec, opt);
+						</script>
+
+					</section>
+
+					<section>
+						<h2>Concat</h2>
+						<p>Use a <code>hconcat</code> or <code>vconcat</code> to package different marks+encodings</p>
+						<pre><code data-trim class='js' data-line-numbers=1-17|17-33>
+							"hconcat":[{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/crimea.json"
+								},
+								"mark": "bar",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"wounds",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/sp500.csv"
+								},
+								"mark": "area",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"price",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							}]
+						</code></pre>
+					</section>
+
+
+
+
 				</section>
 
 				<section>
