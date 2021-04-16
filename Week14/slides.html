@@ -848,7 +848,6 @@
 							},
 							"mark": "bar",
 							"encoding": {
-								"row"
 								"x": {
 									"field": "Origin"
 								},
@@ -1392,7 +1391,7 @@
 					<section>
 						<h2>Layers</h2>
 						<p>We can layer the same marks for different data together</p>
-						<div id="vis-cars-hist5"></div>
+						<div id="vis-crimea-layer-line"></div>
 						<script type="text/javascript">
 						var spec = {
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1443,7 +1442,7 @@
 							}]
 						};
 						var opt = {"renderer": "canvas", "actions": false};
-						vegaEmbed("#vis-cars-hist5", spec, opt);
+						vegaEmbed("#vis-crimea-layer-line", spec, opt);
 						</script>
 					</section>
 
@@ -1501,7 +1500,7 @@
 						<h2>Concats</h2>
 						<p><a href="https://vega.github.io/vega-lite/docs/concat.html">Concats</a> let us combine different views together</p>
 
-						<div id="vis-cars-hist6"></div>
+						<div id="vis-hconcat"></div>
 						<script type="text/javascript">
 						var spec = {
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1544,7 +1543,7 @@
 							}]
 						};
 						var opt = {"renderer": "canvas", "actions": false};
-						vegaEmbed("#vis-cars-hist6", spec, opt);
+						vegaEmbed("#vis-hconcat", spec, opt);
 						</script>
 
 					</section>
@@ -1589,15 +1588,344 @@
 						</code></pre>
 					</section>
 
-
-
-
 				</section>
 
 				<section>
 					<section>
 						<h2>Adding tooltips and interactivity</h2>
-						<p>Friday</p>
+						<p>Finally, the biggest pay-off for using a web-based visualization framework!</p>
+						<p>Interactivity is always going to be more complex than static representations, but Vega has some powerful capabilities</p>
+						<p>Definitely pay close attention to the <a href="https://vega.github.io/vega-lite/examples/#interactive">examples</a></p>
+					</section>
+
+					<section>
+						<h2>Tooltips</h2>
+						<p><a href="https://vega.github.io/vega-lite/docs/tooltip.html">Tooltips</a> provide data about the marks on mouseovers</p>
+					</section>
+
+					<section>
+						<h2>Interactivity</h2>
+						<p>Taken from <a href="https://vega.github.io/vega-lite/examples/interactive_line_hover.html">this example</a></p>
+						<p>There is a lot going on, so it's helpful to use our data science mindset (growth+practices+hacking) to experiment and see how we can break, fix, and extend this</p>
+						<div id="vis-interactive-line"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"description": "Multi-series line chart with labels and interactive highlight on hover.  We also set the selection's initial value to provide a better screenshot",
+							"width": 400,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/stocks.csv"},
+							"transform": [{
+								"filter": "datum.symbol!=='IBM'"
+							}],
+							"encoding": {
+								"x": {
+									"field": "date", 
+									"type": "temporal", 
+									"title": "date"
+								},
+								"y": {
+									"field": "price",
+									"type": "quantitative",
+									"title": "price"
+								},
+								"color": {
+									"condition": {
+										"param": "hover",
+										"field":"symbol",
+										"type":"nominal",
+										"legend": null
+									},
+									"value": "grey"
+								},
+								"opacity": {
+									"condition": {
+										"param": "hover",
+										"value": 1
+									},
+									"value": 0.2
+								}
+							},
+							"layer": [{
+								"description": "transparent layer to make it easier to trigger selection",
+								"params": [{
+									"name": "hover",
+									"value": [{"symbol": "GOOG"}],
+									"select": {
+										"type": "point",
+										"fields": ["symbol"],
+										"on": "mouseover"
+									}
+								}],
+								"mark": {
+									"type": "line",
+									"strokeWidth": 10,
+									"stroke": "transparent"
+								}
+							}, {
+								"mark": "line"
+							}, {
+								"encoding": {
+									"x": {
+										"aggregate": "max",
+										"field": "date"
+									},
+									"y": {
+										"aggregate": {
+											"argmax": "date"
+										}, 
+										"field": "price"
+									}
+								},
+								"layer": [{
+									"mark": {
+										"type": "circle"
+									}
+								}, {
+									"mark": {
+										"type": "text", 
+										"align": "left", 
+										"dx": 4
+									},
+									"encoding": {
+										"text": {
+											"field":"symbol",
+											"type": "nominal"
+										}
+									}
+								}]
+							}],
+							"config": {
+								"view": {
+									"stroke": null
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-interactive-line", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h2>Interactivity</h2>
+						<p>Let's break down what this is doing chunk-by-chunk: This <code>encoding</code> object defines the channels to be used by the line mark and implements the basic hover interactivity</p>
+						<p>Experiment by changing values and commenting</p>
+						<pre><code data-trim class='js' data-line-numbers=2-6|7-11|12-20|21-27>
+							"encoding": {
+								"x": {
+									"field": "date", 
+									"type": "temporal", 
+									"title": "date"
+								},
+								"y": {
+									"field": "price",
+									"type": "quantitative",
+									"title": "price"
+								},
+								"color": {
+									"condition": {
+										"param": "hover",
+										"field":"symbol",
+										"type":"nominal",
+										"legend": null
+									},
+									"value": "grey"
+								},
+								"opacity": {
+									"condition": {
+										"param": "hover",
+										"value": 1
+									},
+									"value": 0.2
+								}
+							},
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Interactivity</h2>
+						<p>The <code>layer</code> object has three entries</p>
+						<p>The first defines the default highlighted line</p>
+						<pre><code data-trim class='js' data-line-numbers=3-11|12-16>
+							"layer": [{
+								"description": "transparent layer to make it easier to trigger selection",
+								"params": [{
+									"name": "hover",
+									"value": [{"symbol": "GOOG"}],
+									"select": {
+										"type": "point",
+										"fields": ["symbol"],
+										"on": "mouseover"
+									}
+								}],
+								"mark": {
+									"type": "line",
+									"strokeWidth": 10,
+									"stroke": "transparent"
+								}
+							}, {
+						</code></pre>
+						
+					</section>
+
+					<section>
+						<h2>Interactivity</h2>
+						<p>The <code>layer</code> object has three entries</p>
+						<p>The second defines the line marks and the third defines the text marks for the ticker labels</p>
+						<pre><code data-trim class='js' data-line-numbers=3-5|5-35|7-17|18-22|23-33>
+							"layer": [{
+								[...]
+							}, {
+								"mark": "line"
+							}, {
+								"encoding": {
+									"x": {
+										"aggregate": "max",
+										"field": "date"
+									},
+									"y": {
+										"aggregate": {
+											"argmax": "date"
+										}, 
+										"field": "price"
+									}
+								},
+								"layer": [{
+									"mark": {
+										"type": "circle"
+									}
+								}, {
+									"mark": {
+										"type": "text", 
+										"align": "left", 
+										"dx": 4
+									},
+									"encoding": {
+										"text": {
+											"field":"symbol",
+											"type": "nominal"
+										}
+									}
+								}]
+							}],
+						</code></pre>
+						
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Exercise</h2>
+						<p>Hack into the stocks.csv interactive visualization to try to make some of these changes:</p>
+						<ul>
+							<li>Change the default highlighted item</li>
+							<li>Change from a line to a different mark type</li>
+							<li>Change the line widths, opacities</li>
+							<li>Change the text marks positions and behaviors</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Exercise</h2>
+						<p>Experiment with making changes to this visualization</p>
+						<div id="vis-interactive-line2"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"description": "Multi-series line chart with labels and interactive highlight on hover.  We also set the selection's initial value to provide a better screenshot",
+							"width": 400,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/stocks.csv"},
+							"transform": [{
+								"filter": "datum.symbol!=='IBM'"
+							}],
+							"encoding": {
+								"x": {
+									"field": "date", 
+									"type": "temporal", 
+									"title": "date"
+								},
+								"y": {
+									"field": "price",
+									"type": "quantitative",
+									"title": "price"
+								},
+								"color": {
+									"condition": {
+										"param": "hover",
+										"field":"symbol",
+										"type":"nominal",
+										"legend": null
+									},
+									"value": "grey"
+								},
+								"opacity": {
+									"condition": {
+										"param": "hover",
+										"value": 1
+									},
+									"value": 0.2
+								}
+							},
+							"layer": [{
+								"description": "transparent layer to make it easier to trigger selection",
+								"params": [{
+									"name": "hover",
+									"value": [{"symbol": "GOOG"}],
+									"select": {
+										"type": "point",
+										"fields": ["symbol"],
+										"on": "mouseover"
+									}
+								}],
+								"mark": {
+									"type": "line",
+									"strokeWidth": 10,
+									"stroke": "transparent"
+								}
+							}, {
+								"mark": "line"
+							}, {
+								"encoding": {
+									"x": {
+										"aggregate": "max",
+										"field": "date"
+									},
+									"y": {
+										"aggregate": {
+											"argmax": "date"
+										}, 
+										"field": "price"
+									}
+								},
+								"layer": [{
+									"mark": {
+										"type": "circle"
+									}
+								}, {
+									"mark": {
+										"type": "text", 
+										"align": "left", 
+										"dx": 4
+									},
+									"encoding": {
+										"text": {
+											"field":"symbol",
+											"type": "nominal"
+										}
+									}
+								}]
+							}],
+							"config": {
+								"view": {
+									"stroke": null
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-interactive-line2", spec, opt);
+						</script>
 					</section>
 				</section>
 			</div>
