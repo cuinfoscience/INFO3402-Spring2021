@@ -607,7 +607,7 @@
 						<h2>Aggregate + Color + Sort + Scale + Annotate + Format</h2>
 						<p><a href="https://observablehq.com/@uwdata/scales-axes-and-legends" target="_blank" rel="noopener noreferrer">This blog post</a> suggests <code>tickCount</code> to lower number of ticks for log-scaled axes</p>
 						<p>Use a <a href="http://numeraljs.com/">registered number format pattern</a> to get commas in big numbers</p>
-						<pre><code data-trim class='js' data-line-numbers=12|17-19|24|46>
+						<pre><code data-trim class='js' data-line-numbers=12|17-19|24|46 style="height: 250px">
 						{
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 							"width": 400,
@@ -739,7 +739,7 @@
 					<section>
 						<h2>Binning: Encoding-level</h2>
 						<p>Set the <code>bin</code> value in a channel to "true"</p>
-						<pre><code data-trim class='js' data-line-numbers=9-12|10|14>
+						<pre><code data-trim class='js' data-line-numbers=10-13|11|15>
 						{
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 							"width": 400,
@@ -926,7 +926,6 @@
 						<h2>Binning: Customization</h2>
 						<p>Bin range is from min to max values, but sometimes you want a different range</p>
 						<p>Use the "extent" parameter and pass an array with [min,max]</p>
-						c
 					</section>
 
 					<section>
