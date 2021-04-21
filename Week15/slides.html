@@ -1371,6 +1371,88 @@
 				<section>
 					<section>
 						<h2>Loading other datasets</h2>
+						<p>Vega can <a href="https://vega.github.io/vega-lite/docs/data.html" target="_blank" rel="noopener noreferrer">load data</a> from a variety of sources:</p>
+						<ul>
+							<li>Inline data: embedded within the document</li>
+							<ul><li>Altair likes to do this but it can be unweildy!</li></ul>
+							<li>Data from URL: what we've been doing</li>
+							<ul><li>JSON, CSV, TSV</li></ul>
+							<li>Generators: if you want to make some simple datasets</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Loading other datasets</h2>
+						<p>The most important thing is to point to the file itself</p>
+						<p><a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week15/ercot_feb_fuel_mix.csv" target="_blank" rel="noopener noreferrer">ERCOT data on class GitHub</a></p>
+						<p>This URL won't work because it's not the data itself, but a HTML page visualizing the data</p>
+						<p>Click the "Raw data" link, which takes you to this <a href="https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv" target="_blank" rel="noopener noreferrer">githubusercontent" file</a> with the data itself</p>
+					</section>
+
+					<section>
+						<h2>Loading other datasets</h2>
+						<p>The data does not have to be hosted on GitHub!</p>
+						<p>The CDC data on "<a href="https://data.cdc.gov/api/views/muzy-jte6/rows.csv?accessType=DOWNLOAD" target="_blank" rel="noopener noreferrer">Weekly Counts of Deaths by State</a>" has a CSV file that can be accessed "Export > CSV"</p>
+						<p>Copy that link location and use it as a data source in a Vega visualization</p>
+					</section>
+
+					<section>
+						<h2>Loading other datasets</h2>
+						<pre><code data-trim class='js' data-line-numbers=|5-7|8-10|13-16|17-20>
+						{
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 600,
+							"height": 400,
+							"data": {
+								"url": "https://data.cdc.gov/api/views/muzy-jte6/rows.csv"
+							},
+							"transform": [{
+								"filter":"datum['Jurisdiction of Occurrence'] == 'United States'"
+							}],
+							"mark": "line",
+							"encoding": {
+								"x": {
+									"field": "Week Ending Date",
+									"timeUnit": "yearmonthdate"
+								},
+								"y": {
+									"field": "COVID-19 (U071, Multiple Cause of Death)",
+									"type": "quantitative"
+								}
+							}
+						}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Loading other datasets</h2>
+						<div id="cdc"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 600,
+							"height": 400,
+							"data": {
+								"url": "https://data.cdc.gov/api/views/muzy-jte6/rows.csv"
+							},
+							"transform": [{
+								"filter":"datum['Jurisdiction of Occurrence'] == 'United States'"
+							}],
+							"mark": "line",
+							"encoding": {
+								"x": {
+									"field": "Week Ending Date",
+									"timeUnit": "yearmonthdate"
+								},
+								"y": {
+									"field": "COVID-19 (U071, Multiple Cause of Death)",
+									"type": "quantitative"
+								}
+							}
+						}
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#cdc", spec, opt);
+						</script>
 					</section>
 
 				</section>
@@ -1420,7 +1502,7 @@
 						<pre><code data-trim class='js' data-line-numbers=|6|8|10-14|15-19|20-23>
 						{
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 800,
+							"width": 600,
 							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
@@ -1453,7 +1535,7 @@
 						var spec = {
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 							"width": 600,
-							"height": 300,
+							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
 							},
@@ -1502,7 +1584,7 @@
 						<pre><code data-trim class='js' data-line-numbers=|6|8-14|10|11|12|17-21|22-26|27-30>
 						{
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 800,
+							"width": 600,
 							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
@@ -1513,6 +1595,11 @@
 									"timeUnit": "year",
 									"equal": 2021
 								}
+							},{
+								"filter":{
+									"field": "Fuel",
+									"oneOf": ["Coal","Gas-CC","Gas","Nuclear","Hydro","Solar","Wind"]
+								}
 							}],
 							"mark": "line",
 							"encoding": {
@@ -1522,16 +1609,23 @@
 									"title": "February 2021"
 								},
 								"y": {
-									"aggregate": "sum",
+									"aggregate": "mean",
 									"field": "Generation",
-									"title": "Total MW generated"
+									"title": "Average MW generated",
+									"scale":{
+										"type":"log",
+										"domain":[1e0,1e4]
+									},
+									"axis": {
+										"tickCount": 5
+									}
 								},
 								"color":{
 									"field":"Fuel",
 									"type": "nominal"
 								}
 							}
-						}
+							}
 						</code></pre>
 					</section>
 
@@ -1541,7 +1635,7 @@
 						<script type="text/javascript">
 						var spec = {
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 800,
+							"width": 600,
 							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
@@ -1552,6 +1646,11 @@
 									"timeUnit": "year",
 									"equal": 2021
 								}
+							},{
+								"filter":{
+									"field": "Fuel",
+									"oneOf": ["Coal","Gas-CC","Gas","Nuclear","Hydro","Solar","Wind"]
+								}
 							}],
 							"mark": "line",
 							"encoding": {
@@ -1561,9 +1660,16 @@
 									"title": "February 2021"
 								},
 								"y": {
-									"aggregate": "sum",
+									"aggregate": "mean",
 									"field": "Generation",
-									"title": "Total MW generated"
+									"title": "Average MW generated",
+									"scale":{
+										"type":"log",
+										"domain":[1e1,1e4]
+									},
+									"axis": {
+										"tickCount": 3
+									}
 								},
 								"color":{
 									"field":"Fuel",
@@ -1575,110 +1681,196 @@
 						vegaEmbed("#rq2", spec, opt);
 						</script>
 					</section>
+
+					<section>
+						<h2>RQ2: February 2021</h2>
+						<p>Solar and wind power fell substantially before and during blackouts</p>
+						<p>Troublingly, nuclear also fell during blackouts</p>
+						<p>Are the solar and wind shortfalls to blame?</p>
+					</section>
+
 				</section>
 
 				<section>
 					<section>
 						<h2>RQ3: Wind and solar in 2021</h2>
 						<p>How did daily wind and and solar generation in 2021 compare to 2020?</p>
-						<p>A line plot with years from "Datetime" on x-axis, total power from "Generated" on y-axis, the "Fuel" sources as colors, and filtered to only include 2020 and 2021 data</p>
+						<p>A line plot with years from "Datetime" on x-axis, an <a href="https://vega.github.io/vega-lite/docs/errorband.html" target="_blank" rel="noopener noreferrer"></a> for pre-2021 "Generated" on y-axis for one layer, the average 2021 generation for the other layer, and the "Fuel" sources as colors</p>
 					</section>
 
 					<section>
-						<h2>RQ2: February 2021</h2>
-						<pre><code data-trim class='js' data-line-numbers=|6|8-14|10|11|12|17-21|22-26|27-30>
+						<h2>RQ3: Wind and solar in 2021</h2>
+						<pre><code data-trim class='js' data-line-numbers=|8-13|14-42|16-20|22-25|27-31|32-36|37-40|42-76|43-49|50-53|55-59|61-69|62|64-66|67-69>
 						{
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 800,
+							"width": 600,
 							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
 							},
 							"transform": [{
 								"filter":{
-									"field": "Datetime",
-									"timeUnit": "year",
-									"gte": 2020
-								}
-							},{
-								"filter":{
 									"field": "Fuel",
 									"oneOf": ["Wind","Solar","Gas-CC"]
 								}
 							}],
-							"mark": "line",
-							"encoding": {
-								"x": {
-									"field": "Datetime",
-									"timeUnit": "monthdate",
-									"title": "February 2021"
+							"layer": [{
+								"transform": [{
+									"filter": {
+										"field": "Datetime",
+										"timeUnit": "year",
+										"lte": 2020
+									}
+								}],
+								"mark": {
+									"type": "errorband", 
+									"extent": "ci"
 								},
-								"y": {
-									"aggregate": "sum",
-									"field": "Generation",
-									"title": "Total MW generated"
+								"encoding": {
+									"x": {
+										"field": "Datetime",
+										"timeUnit": "monthdate",
+										"title": "February 2021"
+									},
+									"y": {
+										"field": "Generation",
+										"type": "quantitative",
+										"title": "Total MW generated"
+									},
+									"color":{
+										"field":"Fuel",
+										"type": "nominal"
+									}
+								}	
+							},{
+								"transform": [{
+									"filter": {
+										"field": "Datetime",
+										"timeUnit": "year",
+										"equal": 2021
+									}
+								}],
+								"mark":{
+									"type":"line",
+									"strokeWidth":5
 								},
-								"color":{
-									"field":"Fuel",
-									"type": "nominal"
-								},
-								"strokeDash":{
-									"field":"Datetime",
-									"timeUnit":"year"
+								"encoding": {
+									"x": {
+										"field": "Datetime",
+										"timeUnit": "monthdate",
+										"title": "February 2021"
+									},
+									"y": {
+										"field": "Generation",
+										"aggregate": "mean",
+										"title": "Total MW generated",
+										"scale":{
+											"type":"log"
+										},
+										"axis": {
+											"tickCount": 5
+										}
+									},
+									"color":{
+										"field":"Fuel",
+										"type": "nominal"
+									}
 								}
+							}]
 							}
-						}
 						</code></pre>
 					</section>
 
 					<section>
-						<h2>RQ2: February 2021</h2>
+						<h2>RQ3: Wind and solar in 2021</h2>
 						<div id="rq3"></div>
 						<script type="text/javascript">
 						var spec = {
 							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-							"width": 800,
+							"width": 600,
 							"height": 400,
 							"data": {
 								"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week15/ercot_feb_fuel_mix.csv"
 							},
 							"transform": [{
 								"filter":{
-									"field": "Datetime",
-									"timeUnit": "year",
-									"gte": 2020
-								}
-							},{
-								"filter":{
 									"field": "Fuel",
 									"oneOf": ["Wind","Solar","Gas-CC"]
 								}
 							}],
-							"mark": "line",
-							"encoding": {
-								"x": {
-									"field": "Datetime",
-									"timeUnit": "monthdate",
-									"title": "February 2021"
+							"layer": [{
+								"transform": [{
+									"filter": {
+										"field": "Datetime",
+										"timeUnit": "year",
+										"lte": 2020
+									}
+								}],
+								"mark": {
+									"type": "errorband", 
+									"extent": "ci"
 								},
-								"y": {
-									"aggregate": "sum",
-									"field": "Generation",
-									"title": "Total MW generated"
+								"encoding": {
+									"x": {
+										"field": "Datetime",
+										"timeUnit": "monthdate",
+										"title": "February 2021"
+									},
+									"y": {
+										"field": "Generation",
+										"type": "quantitative",
+										"title": "Total MW generated"
+									},
+									"color":{
+										"field":"Fuel",
+										"type": "nominal"
+									}
+								}	
+							},{
+								"transform": [{
+									"filter": {
+										"field": "Datetime",
+										"timeUnit": "year",
+										"equal": 2021
+									}
+								}],
+								"mark":{
+									"type":"line",
+									"strokeWidth":3
 								},
-								"color":{
-									"field":"Fuel",
-									"type": "nominal"
-								},
-								"strokeDash":{
-									"field":"Datetime",
-									"timeUnit":"year"
+								"encoding": {
+									"x": {
+										"field": "Datetime",
+										"timeUnit": "monthdate",
+										"title": "February 2021"
+									},
+									"y": {
+										"field": "Generation",
+										"aggregate": "mean",
+										"title": "Total MW generated",
+										"scale":{
+											"type":"log"
+										},
+										"axis": {
+											"tickCount": 5
+										}
+									},
+									"color":{
+										"field":"Fuel",
+										"type": "nominal"
+									}
 								}
+							}]
 							}
-						}
 						var opt = {"renderer": "canvas", "actions": false};
 						vegaEmbed("#rq3", spec, opt);
 						</script>
+					</section>
+					<section>
+						<h2>RQ3: Wind and solar in 2021</h2>
+						<p>Significantly more gas use in 2021 than average, but major shortfalls starting February 13</p>
+						<p>Wind power declines back to normal historical ranges</p>
+						<p>Solar power significantly above average historical ranges</p>
 					</section>
 				</section>
 
