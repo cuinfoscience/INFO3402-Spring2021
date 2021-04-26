@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Week 16 Slides</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/moon.min.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+
+		<!-- Loading Vega-->
+		<script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>INFO 3402: Information Exposition</h3>
+					<p style="color:#CFB87C; font-weight:bold;">Brian Keegan & Abram Handler</p>
+					<p style="color:#565A5C">Week 16: April 26 & 28 2021</p>
+				</section>
+				
+
+				<section>
+					<section>
+						<h2>Outline for Week 16</h3>
+						<ul>
+							<li>Previous weeks</li> 
+							<ul>
+								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2011/slides.html" target="_blank" rel="noopener noreferrer">Week 11</a>: Intro to Reveal.js</li>
+								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2012/slides.html" target="_blank" rel="noopener noreferrer">Week 12</a>: Intermediate Reveal.js + MathJax</a></li>
+								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2013/slides.html" target="_blank" rel="noopener noreferrer">Week 13</a>: Introductory Vega/Altair</a></li>
+								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2014/slides.html" target="_blank" rel="noopener noreferrer">Week 14</a>: Customizing Vega plots</a></li>
+								<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2015/slides.html" target="_blank" rel="noopener noreferrer">Week 15</a>: Transforming data in Vega</a></li>
+							</ul>
+							<li>Transforming and importing <a href="https://vega.github.io/">Vega</a>/<a href="https://altair-viz.github.io/index.html" target="_blank" rel="noopener noreferrer">Altair</a> plots</li>
+							<ul>
+								<li>Mon: Spatial data</li>
+								<li>Wed: Recap</li>
+								<li>Fri: No class!</li>
+							</ul>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Roadmap for rest of semester</h2>
+						<table class="reveal" style="font-size: 65%">
+							<tr>
+								<td>Week</td>
+								<td>Topic</td>
+								<td>WA deadline</td>
+							</tr>
+							<tr>
+								<td>14</td>
+								<td>Customizing Vega plots</td>
+								<td>Apr 16</td>
+							</tr>
+							<tr>
+								<td>15</td>
+								<td>Integrating data into Vega</td>
+								<td>Apr 23</td>
+							</tr>
+							<tr>
+								<td>16</td>
+								<td>Advanced Vega visualizations</td>
+								<td>Apr 30</td>
+							</tr>
+						</table>
+
+						<p>There is <b>no final exam</b> and <b>no final project</b></p>
+					</section>
+
+					<section>
+						<h2>Why so much Vega?</h2>
+						<p>Vega has a number of benefits!</p>
+						<ul>
+							<li>Free and open-source, no costs like Tableau</li>
+							<li>Powerful, cross-platform, and influential</li>
+							<li>Reinforcing your skills with web tools like CSS+JS</li>
+							<li>Using web to improve communication</li>
+							<li>Alternative to <code>pandas</code> for data transformation</li>
+						</ul>
+						<p>Show off in your capstone, final projects, portfolio!</p>
+					</section>
+
+					<section>
+						<h2>Vega Online Editor</h2>
+						<p>The <a href="https://vega.github.io/editor/" target="_blank" rel="noopener noreferrer">online editor</a> has some nice functionality for developing and debugging your code</p>
+						<p>Great way to iteratively develop your visualizations outside of text editor to browser and back</p>
+						<p>It's less forgiving of stray punctuation, but has lots of nice autocomplete and instant feedback</p>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Weekly Assignment 13</h2>
+						<p>Due Monday, April 26 by midnight on <a href="https://canvas.colorado.edu/courses/70121/assignments/956236" target="_blank" rel="noopener noreferrer">Canvas</a></p>
+						<ul>
+							<li>Make a single page with nice CSS framework like Bootstrap (think back to WA6)</li>
+							<li>Write a five-paragraph persuasive essay about what the price of DogeCoin reveals about... something</li>
+							<ul>
+								<li>Cryptocurrencies, economics, memes</li>
+							</ul>
+							<li>Include at least two Vega visualizations in your essay</li>
+							<ul>
+								<li>One visualization should use DogeCoin data</li>
+								<li>One visualization should use some other data</li>
+							</ul>
+						</ul>
+						<p>Historical <a href="https://finance.yahoo.com/quote/DOGE-USD/history/" target="_blank" rel="noopener noreferrer">DogeCoin price and volume data from Yahoo! Finance</a> available on Canvas</p>
+					</section>
+
+					<section>
+						<h2>Weekly Assignment 14</h2>
+						<p>Due Friday, April 30 by midnight on <a href="https://canvas.colorado.edu/courses/70121/assignments/1032378" target="_blank" rel="noopener noreferrer">Canvas</a></p>
+						<p>Write a reflection on different ways of presenting quantitative and computational information to different audiences</p>
+						<p>At least three paragraphs describing how to present work to different audiences</p>
+						<p>No peer review, will help us design future versions of 3402</p>
+					</section>
+
+					<section>
+						<h2>Reflection Survey</h2>
+						<p>Short, free-form survey on Canvas asking for your reflections and input on how 3402 can be designed differently in the future</p>
+						<p>"Required" (we'll nag you a lot) but not graded</p>
+						<p>Complete the survey <a href="https://canvas.colorado.edu/courses/70121/quizzes/179907/" target="_blank" rel="noopener noreferrer">here</a></p>
+					</section>
+
+				</section>
+
+				
+				
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'h/v',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+	</body>
+</html>
