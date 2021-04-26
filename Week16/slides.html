@@ -180,6 +180,90 @@
 						</ul>
 					</section>
 
+					<section>
+						<h2>Connected scatterplot</h2>
+						<pre><code data-trim class='js' style="height: 250px">
+						{
+						"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+						"width": 600,
+						"height": 400,
+						"data": {
+							"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week16/DOGE-USD.csv"
+						},
+						"transform": [{
+							"filter":{
+								"field":"Date",
+								"gte":2019,
+								"timeUnit": "year"
+							}
+						}],
+						"mark": {"type": "line", "point": true},
+						"encoding": {
+							"x":{
+								"field":"Close",
+								"type":"quantitative",
+								"scale":{"type": "log"},
+								"axis": {"tickCount": 5}
+							},
+							"y":{
+								"field":"Volume",
+								"type": "quantitative",
+								"scale":{"type": "log"},
+								"axis": {"tickCount": 5}
+							},
+							"color":{
+								"field":"Date",
+								"timeUnit":"yearmonth",
+								"scale": {"scheme": "category10"}
+							}
+						}
+						}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Connected scatterplot</h2>
+						<div id="conscatplot"></div>
+						<script type="text/javascript">
+						var spec = {
+						"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+						"width": 600,
+						"height": 400,
+						"data": {
+							"url": "https://raw.githubusercontent.com/cuinfoscience/INFO3402-Spring2021/main/Week16/DOGE-USD.csv"
+						},
+						"transform": [{
+							"filter":{
+								"field":"Date",
+								"gte":2019,
+								"timeUnit": "year"
+							}
+						}],
+						"mark": {"type": "line", "point": true},
+						"encoding": {
+							"x":{
+								"field":"Close",
+								"type":"quantitative",
+								"scale":{"type": "log"},
+								"axis": {"tickCount": 5}
+							},
+							"y":{
+								"field":"Volume",
+								"type": "quantitative",
+								"scale":{"type": "log"},
+								"axis": {"tickCount": 5}
+							},
+							"color":{
+								"field":"Date",
+								"timeUnit":"yearmonth",
+								"scale": {"scheme": "category10"}
+							}
+						}
+						}
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#conscatplot", spec, opt);
+					</section>
+
 				</section>
 
 				<section>
